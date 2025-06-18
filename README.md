@@ -10,6 +10,13 @@ npm i
 ```
 then run the development server:
 
+when you are in the project directory
+copy .env.example to .env to have all the variables the app needs to function
+
+```
+cp env.example .env
+```
+
 ```bash
 npm run dev
 # or
