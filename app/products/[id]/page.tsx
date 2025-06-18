@@ -6,7 +6,7 @@ import { Metadata } from "next";
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id: productId } = await params;
   const product = await fetchProductById(productId);
@@ -23,7 +23,7 @@ export async function generateMetadata({
 export default async function ProductPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id: productId } = await params;
   const product = await fetchProductById(productId);

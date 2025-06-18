@@ -1,33 +1,45 @@
-import { ImageResponse } from "@vercel/og";
+import { ImageResponse } from "next/og";
+import { NextRequest } from "next/server";
 import { fetchProductById } from "@/lib/api";
 
-export const runtime = "edge";
-
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } },
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> },
 ) {
-  const { id: productId } = await params;
-  const product = await fetchProductById(productId);
-  if (!product) return new Response("Not Found", { status: 404 });
+  const { id } = await context.params;
+  if (!id) {
+    return new Response("No id found in the url", { status: 404 });
+  }
+  const product = await fetchProductById(id);
+
+  if (!product) {
+    return new Response("Not Found", { status: 404 });
+  }
 
   return new ImageResponse(
     (
       <div
         style={{
           fontSize: 40,
+          color: "black",
           background: "white",
-          padding: "40px",
+          width: "100%",
+          height: "100%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          width: "100%",
-          height: "100%",
+          padding: "40px",
         }}
       >
-        <img src={product.image} width="200" height="200" alt="product-image" />
-        <div style={{ marginTop: 20 }}>{product.title}</div>
+        <img
+          src={product.image}
+          alt={product.title}
+          width="300"
+          height="300"
+          style={{ objectFit: "contain" }}
+        />
+        <div style={{ fontSize: 32, marginTop: 20 }}>{product.title}</div>
       </div>
     ),
     {
