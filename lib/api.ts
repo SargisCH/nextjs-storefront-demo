@@ -8,5 +8,7 @@ export async function fetchAllProducts() {
 export async function fetchProductById(id: string) {
   const res = await fetch(`${BASE_URL}/products/${id}`);
   if (!res.ok) return null;
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error("Failed to fetch product");
   return res.json();
 }
