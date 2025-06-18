@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { IProduct } from "@/types/product";
 
-export function ProductCard({ product }: { product: any }) {
+export function ProductCard({ product }: { product: IProduct }) {
   return (
     <Link href={`/products/${product.id}`}>
       <Card className="hover:shadow-lg transition">
