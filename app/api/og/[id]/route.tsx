@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import { fetchProductById } from "@/lib/api";
@@ -33,7 +34,7 @@ export async function GET(
         }}
       >
         <img
-          src={product.image}
+          src={`${process.env.BASE_URL}/api/image?url=${encodeURIComponent(product.image)}`}
           alt={product.title}
           width="300"
           height="300"
